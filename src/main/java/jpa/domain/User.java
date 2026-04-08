@@ -1,62 +1,79 @@
 package jpa.domain;
 
-import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 @Entity
-public class User implements Serializable {
-    private Long id;
-    private String username;
+@Table(name = "users")
+public class User extends People {
+
+    @Column(nullable = false)
+    private String adresse;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
-    private List<Event> events  = new ArrayList<Event>();
+    private Integer maxBookings;
 
-    public User(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
+    private Integer dureeBooking;
+
+    @OneToMany(mappedBy = "user")
+    private List<Borrow> borrowings = new ArrayList<>();
 
     public User() {
-
     }
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
+    public User(String nom, String prenom, String adresse, String email, Integer maxBookings, Integer dureeBooking) {
+        super(nom, prenom);
+        this.adresse = adresse;
+        this.email = email;
+        this.maxBookings = maxBookings;
+        this.dureeBooking = dureeBooking;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAdresse() {
+        return adresse;
     }
-    public void setUsername(String username) {
-        this.username = username;
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    public List<Event> getEvents() {
-        return events;
-    }
-    public void setEvents(List<Event> events) { this.events = events; }
-
-    // helper method (super important)
-    public void addEvent(Event e) {
-        events.add(e);
-        e.setUser(this);
+    public Integer getMaxBookings() {
+        return maxBookings;
     }
 
+    public void setMaxBookings(Integer maxBookings) {
+        this.maxBookings = maxBookings;
+    }
+
+    public Integer getDureeBooking() {
+        return dureeBooking;
+    }
+
+    public void setDureeBooking(Integer dureeBooking) {
+        this.dureeBooking = dureeBooking;
+    }
+
+    public List<Borrow> getBorrowings() {
+        return borrowings;
+    }
+
+    public void setBorrowings(List<Borrow> borrowings) {
+        this.borrowings = borrowings;
+    }
 }
