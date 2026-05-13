@@ -1,18 +1,14 @@
 package jpa.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "people")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class People {
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "role")
+public abstract class People implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +20,25 @@ public class People {
     @Column(nullable = false)
     private String prenom;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
     public People() {
     }
 
-    public People(String nom, String prenom) {
+    public People(String nom, String prenom, String password, String email) {
         this.nom = nom;
         this.prenom = prenom;
+        this.password = password;
+        this.email = email;
     }
+
+    @Transient
+    public abstract Role getRole();
+
 
     public Long getId() {
         return id;
@@ -54,6 +62,22 @@ public class People {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

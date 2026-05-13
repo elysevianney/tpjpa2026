@@ -4,13 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
 import java.lang.Object;
 
 @Entity
-@Table(name = "books")
-public class Book extends LibraryItem {
+public class Book extends Element implements Serializable {
 
-    @Column(nullable = false)
+
     private String author;
 
     public Book() {

@@ -25,7 +25,7 @@ public class UserResource {
     @GET
     @Path("/{id}")
     public User getTicketById(@PathParam("id") Long id)  {
-        return service.findOne(id);
+        return service.findById(id);
     }
 
     @GET

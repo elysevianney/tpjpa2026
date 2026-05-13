@@ -1,13 +1,11 @@
 package jpa.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -16,23 +14,35 @@ public class User extends People {
     @Column(nullable = false)
     private String adresse;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+
 
     private Integer maxBookings;
 
     private Integer dureeBooking;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Borrow> borrowings = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_wishlist",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "element_id"))
+    @JsonIgnore
+    private List<Element> wishlist = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String nom, String prenom, String adresse, String email, Integer maxBookings, Integer dureeBooking) {
-        super(nom, prenom);
+    @Transient
+    @Override
+    public Role getRole() {
+        return Role.USER;
+    }
+
+    public User(String nom, String prenom, String password, String adresse, String email, Integer maxBookings, Integer dureeBooking) {
+        super(nom, prenom, password, email);
         this.adresse = adresse;
-        this.email = email;
         this.maxBookings = maxBookings;
         this.dureeBooking = dureeBooking;
     }
@@ -45,13 +55,7 @@ public class User extends People {
         this.adresse = adresse;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public Integer getMaxBookings() {
         return maxBookings;
@@ -75,5 +79,13 @@ public class User extends People {
 
     public void setBorrowings(List<Borrow> borrowings) {
         this.borrowings = borrowings;
+    }
+
+    public List<Element> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(List<Element> wishlist) {
+        this.wishlist = wishlist;
     }
 }

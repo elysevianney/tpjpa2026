@@ -22,6 +22,12 @@ public class RestApplication extends Application {
         resources.add(UserResource.class);
         //NEW LINE TO ADD
         resources.add(SwaggerResource.class);
+        resources.add(AuthResource.class);
+        resources.add(ElementResource.class);
+        resources.add(BorrowResource.class);
+
+        resources.add(JacksonConfig.class);
+
 
         return resources;
     }

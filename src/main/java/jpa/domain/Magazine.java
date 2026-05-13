@@ -1,5 +1,6 @@
 package jpa.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -7,10 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "magazines")
-public class Magazine extends LibraryItem {
+public class Magazine extends Element implements Serializable {
 
-    @Column(nullable = false)
     private LocalDate datePublication;
 
     public Magazine() {

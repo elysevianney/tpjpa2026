@@ -1,18 +1,17 @@
 package jpa.dao.generic;
 
-
 import jakarta.persistence.NoResultException;
-import jpa.domain.User;
+import jpa.domain.People;
 
-public class UserDao extends AbstractJpaDao<Long, User> {
-    public UserDao() {
-        super(User.class);
+public class PeopleDao extends AbstractJpaDao<Long, People> {
+    public PeopleDao() {
+        super(People.class);
     }
 
-    public User findByEmail(String email) {
+    public People findByEmail(String email) {
         try {
             return entityManager
-                    .createQuery("select u from User u where u.email = :email", User.class)
+                    .createQuery("select p from People p where p.email = :email", People.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {

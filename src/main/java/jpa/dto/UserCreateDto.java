@@ -1,33 +1,58 @@
 package jpa.dto;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jpa.domain.Event;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserCreateDto {
 
     @NotEmpty
     @NotNull
-    private String username;
+    private String nom;
+
+    @NotEmpty
+    @NotNull
+    private String prenom;
+
+    private String adresse;
 
     @NotEmpty
     @NotNull
     private String email;
 
+    @NotEmpty
+    @NotNull
+    private String password;
 
 
-
-    public String getUsername() {
-        return username;
+    public String getNom() {
+        return nom;
     }
-    public void setUsername(String username) {
-        this.username = username;
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

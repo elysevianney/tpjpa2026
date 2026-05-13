@@ -1,7 +1,6 @@
 package jpa.domain;
 
 
-import java.lang.Object;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -16,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "borrowings")
-public class Borrow {
+public class Borrow implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,7 @@ public class Borrow {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "item_id", nullable = false)
-    private Object item;
+    private Element item;
 
     private LocalDate borrowDate;
 
@@ -42,7 +41,7 @@ public class Borrow {
     public Borrow() {
     }
 
-    public Borrow(User user, LibraryItem item, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate, BorrowStatus status) {
+    public Borrow(User user, Element item, LocalDate borrowDate, LocalDate dueDate, LocalDate returnDate, BorrowStatus status) {
         this.user = user;
         this.item = item;
         this.borrowDate = borrowDate;
@@ -67,11 +66,11 @@ public class Borrow {
         this.user = user;
     }
 
-    public Object getItem() {
+    public Element getItem() {
         return item;
     }
 
-    public void setItem(Object item) {
+    public void setItem(Element item) {
         this.item = item;
     }
 
