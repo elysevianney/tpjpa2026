@@ -1,0 +1,81 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class People {
+  - id : Long
+  - nom : String
+  - prenom : String
+  - email : String
+  - password : String
+  + getRole() : Role
+}
+
+class User {
+  - adresse : String
+  - maxBookings : Integer
+  - dureeBooking : Integer
+}
+
+class Admin
+
+class Element {
+  - id : Long
+  - media : String
+  - title : String
+}
+
+class Book {
+  - author : String
+}
+
+class Magazine {
+  - datePublication : LocalDate
+}
+
+class Borrow {
+  - id : Long
+  - borrowDate : LocalDate
+  - dueDate : LocalDate
+  - returnDate : LocalDate
+  - status : BorrowStatus
+}
+
+enum BorrowStatus {
+  IN_PROGRESS
+  BORROWED
+  RETURNED
+  LATE
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+People <|-- User
+People <|-- Admin
+Element <|-- Book
+Element <|-- Magazine
+
+User "1" -- "0..*" Borrow : borrowings
+Borrow "0..*" -- "1" User : user
+
+Element "1" -- "0..*" Borrow : borrowings
+Borrow "0..*" -- "1" Element : item
+
+User "0..*" -- "0..*" Element : wishlist / wishedBy
+
+Borrow --> BorrowStatus : status
+People ..> Role : getRole()
+
+note right of People
+Inheritance strategy:
+JOINED
+Discriminator column: role
+end note
+
+note right of Element
+Inheritance strategy:
+SINGLE_TABLE
+end note
+@enduml
