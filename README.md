@@ -91,7 +91,7 @@ password: Azerty123?
 Executer [`RestServer.java`](src/main/java/rest/RestServer.java), puis ouvrir:
 
 ```text
-http://localhost:8080/swagger/
+http://localhost:8080/api/
 ```
 
 ## Exemples JSON
